@@ -1,24 +1,26 @@
-# Início da disciplina 
+# Exercício 1 - Início da disciplina 
 
 O primeiro exercício da cadeira de computação gráfica consiste em instalar o **OpengGl** e executar o programa **01_hello_world_gl** fornecido para verificar se a instalação foi feita corretamente, para assim iniciar as atividades da disciplina.
 
 # Instalação do OpenGl
 
-Os comandos para a instalação foram os seguintes:
+Os comandos utilizados na instalação foram os seguintes:
 
 - $ sudo apt-get update
 
 - $ sudo apt-get install libglul-mesa-dev freeglut3-dev mesa-common-dev
 
-O primeiro comando serve para atualizar todos os pacotes do sistema para não causar nenhum erro durante a instalação de programas, já o segundo realiza a instalação do OpenGl atravéz do **GLUT**. Como o Glut é uma ferramenta que depende do OpenGl e outras bibliotecas, ao fazer sua instalação todo o resto virá junto.
+O primeiro comando serve para atualizar todos os pacotes do sistema para não causar nenhum erro durante a instalação de programas, já o segundo realiza a instalação do OpenGl através do **GLUT**. Como o Glut é uma ferramenta que depende do OpenGl e outras bibliotecas, ao fazer sua instalação todo o resto virá junto.
+
+Fonte: <http://www.codebind.com/linux-tutorials/install-opengl-ubuntu-linux/>
 
 # Executando o Exemplo
 
-Para executar o algoritmo é necessario realizar o seguinte comando:
+Para executar o algoritmo foi necessário realizar o seguinte comando:
 
 - $ gcc main.c -o openglExemplo -lglut -lGLU -lGL
 
-Porém com o OpenGl moderno um erro de versão ocorre com a minha intel hd grapichs, impossibilitando a execução correta do exemplo.
+Porém com o OpenGl moderno um erro de versão ocorre com a minha intel hd graphics, impossibilitando a execução correta do exemplo.
 
 
 ![Captura_de_tela_de_2020-10-05_20-45-14](https://user-images.githubusercontent.com/72319716/95143297-12d83400-074c-11eb-8af1-56486ac43127.png)
