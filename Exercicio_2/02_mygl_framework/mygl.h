@@ -18,12 +18,6 @@ struct Point{
 	float x;
 	float y;
 };
-struct Line{
-	float xi;
-	float yi;
-	float xf;
-	float yf;
-};
 
 void MyGlDraw(void);
 
