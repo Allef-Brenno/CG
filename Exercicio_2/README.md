@@ -1,14 +1,13 @@
-# Atividade Prática 2 | Triângulos gerados por meio do uso de algoritmos de rasterização do Algoritmo do Ponto Médio.
+# Atividade Prática 2 | Triângulos gerados por meio do uso do Algoritmo do Ponto Médio.
 **GDSCO0051 - Introdução à Computação Gráfica** - Turmas 03/04 - 2020.1
 
 **Alunos:**
- - Lucas de Lima Martins de Souza.
- - Allef Brenno Gomes de Lima.
+ - **Lucas de Lima Martins de Souza - 20170061294**
+ - **Allef Brenno Gomes de Lima - 20160121380**
 ___
-<h2 align="center">Triângulos gerados por meio de algoritmos da rasterização do Algorítmo do ponto</h2>
+<h2 align="center">Triângulos gerados por meio de algoritmo de rasterização do Ponto Médio</h2>
 
 ___
-
 
 
 
@@ -29,18 +28,16 @@ ___
 
 ## :information_source: Sobre
 
-A atividade consiste em implementar algoritmos de rasterização de linhas, nesse caso em específico baseado no Algoritmo do ponto médio para a criação de triângulos a partir de pares de coordenadas (x, y) passadas. 
+A atividade consiste em implementar algoritmos de rasterização de linhas, nesse caso em específico baseado no Algoritmo do Ponto Médio para a criação de triângulos a partir dos vértices(x, y) dos trigângulos passados. 
 
 Além disso, realizar as alterações necessárias para que seja possível rasterizar retas em qualquer direção/octante, já que no Algoritmo do Ponto Médio seria focado somente no 1º Octante.
 
+Lucas de Lima foi responsável pelas funções Putpixel(), pela Interpolação de Cores e também  ajudou um pouco na DrawnLine(). Allef foi responsável pela maior parte da DrawnLine() e pela DrawTriangle(). Apesar dessa separação entre o dever de cada um, todo trabalho foi feito em conjunto, não hcegou a ter alguma parte em que um não tentasse ajudar o outro, principalmente com toda dificuldade de sair do campo abstrato e ir para o código, foi necessário o trabalho em conjunto!.
+
+O principal esforço em dupla realizado foi  a construção da DrawnLine(), as estratégias dos Octantes, essa foi uma das partes mais difícies do trabalho, assim como apesar de não ter funcionado completamente, a estratégia de Interpolação de Cores também foi pensada em dupla.
 ___
 ## :interrobang: Estratégias
-Uma vez compilado, ao ser executado, o programa deverá apresentar uma janela contendo um triângulo com base nos números dos vértices do triângulo da função:
-  ```c
-   MyGlDraw(void)
-   ```
-
-Além disso, as cores RGBA são definidas em um struct, assim como usamos uma struct Point para auxiliar na passagem dos pontos nas funções:
+É utilizado structs para definição das cores RGBA e dos pontos.
 
 ```c
 struct RGBA{
@@ -56,20 +53,18 @@ struct Point{
 };
 ```
 
-As funções requeridas no trabalho também são implementas:
+**Funções implementadas:**
 ```c
 PutPixel(int x, int y, struct RGBA color);
 ```
 A função PutPixel rasteriza um ponto na memória de vídeo recebendo como parâmetros as coordenadas (x,y) do pixel na tela e sua cor (RGBA).
-Utilizamos um Struct para passar a cor RGBA.
 ___
 ```c
 DrawLine(struct Point pontoA,struct Point pontoB, struct RGBA color);
 ```
 Responsável por rasterizar uma linha na tela, recebendo como parâmetros as coordenadas dos seus vértices inicial e final e as cores (no formato RGBA) de cada vértice. 
 
-O algoritmo utilizado é baseado no Algoritmo do Ponto Médio, porém esse algoritmo só consegue desenhar retas no 1º Octante do plano cartesiano. Assim algumas modificações devem ser realizadas para que seja possível a rasterização de retas em qualquer posição do plano cartesiano.
-As tuplas de vértices iniciais e finais e cor RGBA são passados como structs.
+O algoritmo utilizado é baseado no Algoritmo do Ponto Médio, porém esse algoritmo só consegue desenhar retas no 1º Octante do plano cartesiano. A partir disso, modificações devem ser realizadas para que seja possível a rasterização de retas em qualquer posição do plano cartesiano.
 
 **Restrições dos 8 Octantes**
 
@@ -78,7 +73,7 @@ Em cada Octante há suas regras/limitantes que devem ser seguidas para conseguir
 
 <img src="https://media.discordapp.net/attachments/748604533827174534/767530137641287690/49b4a-octantes.png" width="800">
 
-A função CheckLine:
+**A função CheckLine:**
 ```c
 CheckLine(struct Point pontoA,struct Point pontoB);
 ```
@@ -89,9 +84,9 @@ Exemplo:
 
 Pela imagem acima, temos que no 7º Octante o coeficiente angular(m) pode variar entre -1 e -∞(-1 > m > -∞) e outra restrição é que a coordenada y do ponto final é sempre menor que a coordenada y do ponto inicial(Y2 < Y1) 
 
-Com o Octante determinado, é necessário realizar operações específicas com a reta para que ela seja  de modo que independente do Octante em que ela esteja, ela seja rasterizada a partir do conceito do Algoritmo do Ponto Médio.
+Com o Octante determinado, é necessário realizar operações específicas com a reta para  que independente do Octante em que ela esteja, seja rasterizada a partir do conceito do Algoritmo do Ponto Médio.
 
-No Algoritmo do Ponto Médio as coordenadas de Y estão em função de X. Dessa forma:
+No Algoritmo do Ponto Médio as coordenadas de Y estão em função de X. Assim, as alterações que devem ser feitas:
 
 **Exemplo: 2º Octante**
 
@@ -124,15 +119,15 @@ Após essa transformação, a reta está moldada para ser calculada no Algoritmo
 No 4º Octante os valores das coordenadas estariam espelhando os do modelo do Algoritmo do Ponto Médio, pois este está no 1º Octante, um é o espelho do outro. Portante, 2 alterações serão feitas:
 
   Dado que essa seja a Reta inicial:
+  
   <img src="https://i.imgur.com/g5Q0BL4.png" width="600">
 
 - 1º Alteração:
   - No Algoritmo do Ponto Médio(que é no 1º Octante) as coordenadas do X final sempre serão maiores que as coordenadas do X inicial.
 
-    Já que o 4º Octante é um espelhamento do 1º Octante, para manter a regra acima, é necessário que X final seja trocado pelo X inicial.
-    
+  - á que o 4º Octante é um espelhamento do 1º Octante, para manter a regra acima, é necessário que X final seja trocado pelo X inicial.
 
-    Após a 1º Alteração, essa será a Reta resultante:
+  - Após a 1º Alteração, essa será a Reta resultante:
    <img src="https://i.imgur.com/uPHW3MD.png" width="600">
 - 2º Alteração:
   
@@ -154,20 +149,108 @@ No 4º Octante os valores das coordenadas estariam espelhando os do modelo do Al
     - 3º com o 7º octante
     - 4º com o 8º octante
 
-Portanto, para construir o Algoritmo, foi necessário implementar as modificações do 1º ao 4º quadrante, resolvendo assim por meio da simetria entre os demais quadrantes. 
-___
+Portanto, para construir o Algoritmo, foi necessário implementar as modificações do 1º ao 4º octantes,e com isso, resolver por meio da simetria entre os demais octantes. 
 
+**A Interpolação Linear de Cores**
+
+Não foi possível realizar a interpolação Linear das cores totalmente efetiva. Na lógica utilizada, há o funcionamento somente com a entrada de vértices de triângulos que não possuam coordenadas tão distantes umas das outras. 
+
+**Falha**: 
+ - Caso a entrada na entrada dos 3 vértices do Triângulo, algum deles possua alguma coordenada muito distante das coordenadas dos demais vértices, as linhas rasterizadas ligadas à esse vértice não serão coloridas, ficaram por padrão pretas. 
+ - Esse problema ocorre somente no uso da Interpolação Linear de Cores,  o projeto gera os triângulos normalmente.
+ - Quando não se usa a interpolação e configura a cor das linhas, qualquer triângulo será rasterizado colorido na cor configurada normalmente.
+
+**Lógica Utilizada:**
+ - Calcula-se a variação(deltas) entre das coordenadas x e y dos pontos
+ - Caso o delta em x seja maior que 0, é realizado a diferença entre as 2 cores red, green e blue.
+ - Cada diferença dessas é divididada pelo delta em x.
+ - O valor final de cada divisão é guardado.
+ - Caso o delta em X não seja maior que zero, então é feito o mesmo procedimento mas com o delta em y.
+	
+```c
+	if(dx>0){
+		rP = (color2.red - color1.red)/dx;
+		gP = (color2.green - color1.green)/dx;
+		bP = (color2.blue - color1.blue)/dx;
+	}else if(dy>0){
+		rP = (color2.red - color1.red)/dy;
+		gP = (color2.green - color1.green)/dy;
+		bP = (color2.blue - color1.blue)/dy;
+	}
+```
+ - Por fim esses valores são somados as cores RGBA:
+ ```c
+	colorF.red = colorF.red + rP;
+	colorF.green = colorF.green + gP;
+	colorF.blue = colorF.blue + bP;
+ ```
+ 
+ **Motivo da falha**
+  - As cores por padrão são definidas com o valor 0.
+  - O problema ocorre quando a distância entre algum vértice é grande. Pois assim, o delta(dx) do trecho do código acima assume um valor alto, enquanto que a diferença realizada no Numerador da divisões do trecho do código acima se torna um valor baixo, e essa divisão resulta em um valor entre 0 e 1.
+  - O Resultado dessas divisões é guardado em varíaveis que são float.
+  - No entando, as cores são valores inteiros, e quando ocorre a soma entre as cores e as variáveis que guardam o resultado da divisão(que são float), essas divisiões que são valores entre 0 e 1 tornam-se 0 nessa soma final.
+  - Por fim, a conversão da variável float em 0 e como as cores são declaradas com o valor 0, então a soma final será 0 = 0 + 0 configurando assim a cor preta.
+___
 
 ```c
 DrawTriangle(struct Point pontoA,struct Point pontoB, struct RGBA color);
 ```
 Basta chamar o DrawnLine 3 vezes, e relacionar os 3 pontos(vértices do triãngulo).
- - 1º Ponto é o A
- - 2º Ponto é o B
- - 3º Ponto é o C
+ - 1º Ponto é o A(Vértice esquerdo)
+ - 2º Ponto é o B(Vértice do meio)
+ - 3º Ponto é o C(Vértice da direita)
   <img src="https://media.discordapp.net/attachments/748604533827174534/767519565844054046/Sem_titulo.png" width=600>
 
+___
 ## :seedling: Resultados:
+- Triângulo com a Interpolação Linear de Cores realizada com sucesso:
+- Vértices escolhidos:
+ 	- A(100, 100)
+ 	- B(200, 300)
+ 	- C(300, 100)
+<img src="https://i.imgur.com/0gv2KUx.png">
+
+___
+
+- Triângulo com a falha da Interpolação Linear de Cores citada acima:
+- As linhas ligadas ao ponto C não são coloridas e ficam pretas.
+- Vértices escolhidos:
+ 	- A(100, 100)
+ 	- B(200, 300)
+ 	- C(457, 465)
+<img src="https://i.imgur.com/gpHhUfs.png">
+
+___
+
+- O mesmo triângulo acima sem a Interpolação Linear de Cores:
+- Vértices escolhidos:
+ 	- A(100, 100)
+ 	- B(200, 300)
+ 	- C(457, 465)
+<img src="https://i.imgur.com/LC74mJs.png">
+
+___
+
+**Segue exemplos com a Interpolação Linear de Cores realizada com sucesso:**
+
+- Vértices escolhidos:
+ 	- A(100, 200)
+ 	- B(200, 400)
+ 	- C(350, 350)
+<img src="https://i.imgur.com/d9u1nRm.png">
+
+___
+
+- Vértices escolhidos:
+	- A(200, 100)
+ 	- B(200, 300)
+ 	- C(100, 300)
+<img src="https://i.imgur.com/1oRDZz4.png">
+
+___
+
+**Segue outros exemplos sem a Interpolação Linear de Cores:**
 - Triângulo Escaleno:
   <img src="https://i.imgur.com/0FEKgOy.png">
 
@@ -181,11 +264,14 @@ Basta chamar o DrawnLine 3 vezes, e relacionar os 3 pontos(vértices do triãngu
 **Dificultades**
     
 - A abstração para sair do campo da lógica da algebra vetorial para a lógica da programação foi muito dificil.
-- Os documentos passados não ajudaram em colaborar com a lógica do trabalho. Com isso, o mal entendimento dos materiais passados, a construção da lógica do trabalho tornou-se muito complexa.
+- Os documentos passados não ajudaram em colaborar com a lógica do trabalho, na verdade, geraram mais dúvidas sobre o assunto. Com isso, o mal entendimento dos materiais passados, a construção da lógica do trabalho tornou-se muito complexa.
 - Essa complexidade aumentou mais pelo fato de que os sites buscados sobre o assunto também ou eram escassos ou difícies de se entender.
 
 **Melhorias**
 - Acredita-se que os documentos de referências passados poderiam ser mais didáticos. 
+- Mais exemplos práticos na aula, mais praticidade no geral em conjunto com os alunos. Pois é muito difícil encaixar toda teoria passada em uma aula somente de slides aprensentando conceitos em um projeto prático com a lógica de programação.
+
+___
 
 ## :seedling: Requisitos Mínimos - Instalação das bibliotecas do OpenGL e Configurações:
 - Atualização das listas de pacotes dos repositórios para obter informações sobre as versões mais recentes dos pacotes e suas dependencias
@@ -223,6 +309,7 @@ sudo apt-get install mesa-common-dev;
 sudo apt-get install binutils-gold; 
 ```
 ___
+
 ## :package: Baixar:
 
   - Clonar o projeto:
@@ -244,4 +331,5 @@ ___
    ./mygl
     ```
 ___
+
 Desenvolvido por :star2: Lucas de Lima Martins de Souza e :crown: Allef Brenno Gomes de Lima.
